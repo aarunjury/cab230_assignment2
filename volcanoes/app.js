@@ -1,18 +1,18 @@
-const createError = require("http-errors");
 const express = require("express");
+const createError = require("http-errors");
 const path = require("path");
-const cookieParser = require("cookie-parser");
-const logger = require("morgan");
-
+const swaggerUI = require("swagger-ui-express");
+const swaggerDog = require("./docs/swaggerdog");
+const bcrypt = require('bcrypt');
 const options = require("./knexfile.js");
 const knex = require("knex")(options);
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
 require("dotenv").config();
-const swaggerUI = require("swagger-ui-express");
-const swaggerDog = require("./docs/swaggerdog.json");
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/user");
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/user");
 
 var app = express();
 
@@ -34,16 +34,16 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(cors());
 
-app.get("/knex", function (req, res, next) {
-  req.db
-    .raw("SELECT VERSION()")
-    .then((version) => console.log(version[0][0]))
-    .catch((err) => {
-      console.log(err);
-      throw err;
-    });
-  res.send("Version logged");
-});
+// app.get("/knex", function (req, res, next) {
+//   req.db
+//     .raw("SELECT VERSION()")
+//     .then((version) => console.log(version[0][0]))
+//     .catch((err) => {
+//       console.log(err);
+//       throw err;
+//     });
+//   res.send("Version logged");
+// });
 
 app.use("/", indexRouter);
 app.use("/user", usersRouter);
