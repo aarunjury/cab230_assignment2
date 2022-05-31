@@ -1,18 +1,24 @@
-const express = require("express");
 const createError = require("http-errors");
+const express = require("express");
 const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const cors = require("cors");
 const swaggerUI = require("swagger-ui-express");
 const swaggerDog = require("./docs/swaggerdog");
 const bcrypt = require('bcrypt');
 const options = require("./knexfile.js");
 const knex = require("knex")(options);
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
-const logger = require("morgan");
+
 require("dotenv").config();
+// access env var for private key
+process.env.TOKEN_SECRET;
 
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/user");
+const countriesRouter = require("./routes/countries");
+const userRouter = require("./routes/user");
+const volcanoRouter = require("./routes/volcano");
+const volcanoesRouter = require("./routes/volcanoes");
 
 var app = express();
 
@@ -20,33 +26,25 @@ app.use((req, res, next) => {
   req.db = knex;
   next();
 });
-app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDog));
+app.use(cors());
+app.use("/", swaggerUI.serve);
+app.get("/", swaggerUI.setup(swaggerDog, {swaggerOptions: {defaultModelsExpandDepth: -1},}))
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
+app.set("view engine", "pug");
 
-app.use(logger("combined"));
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(cors());
-
-// app.get("/knex", function (req, res, next) {
-//   req.db
-//     .raw("SELECT VERSION()")
-//     .then((version) => console.log(version[0][0]))
-//     .catch((err) => {
-//       console.log(err);
-//       throw err;
-//     });
-//   res.send("Version logged");
-// });
-
 app.use("/", indexRouter);
-app.use("/user", usersRouter);
+app.use("/countries", countriesRouter);
+app.use("/user", userRouter);
+app.use("/volcano", volcanoRouter);
+app.use("/volcanoes", volcanoesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
