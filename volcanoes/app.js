@@ -14,7 +14,7 @@ require("dotenv").config();
 // access env var for private key
 process.env.TOKEN_SECRET;
 
-const indexRouter = require("./routes/index");
+const meRouter = require("./routes/me");
 const countriesRouter = require("./routes/countries");
 const userRouter = require("./routes/user");
 const volcanoRouter = require("./routes/volcano");
@@ -40,7 +40,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
+app.use("/me", meRouter);
 app.use("/countries", countriesRouter);
 app.use("/user", userRouter);
 app.use("/volcano", volcanoRouter);
