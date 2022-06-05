@@ -1,6 +1,6 @@
 {
-  "name": "expworld",
-  "version": "0.0.0",
+  "name": "volcanoes",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -22,5 +22,21 @@
     "mysql2": "^2.3.3",
     "pug": "^3.0.2",
     "swagger-ui-express": "^4.4.0"
-  }
+  },
+  "description": "Volcanoes of the World API v2.0 by Aarun Jury",
+  "main": "app.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aarunjury/cab230_assignment2.git"
+  },
+  "author": "Aarun Jury",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aarunjury/cab230_assignment2/issues"
+  },
+  "homepage": "https://github.com/aarunjury/cab230_assignment2#readme"
 }
