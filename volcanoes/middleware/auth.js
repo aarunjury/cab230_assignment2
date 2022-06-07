@@ -9,9 +9,7 @@ module.exports.authorise = (req, res, next) => {
       return;
   }
   // Retrieve token
-  console.log("Auth follows")
-  console.log(auth);
-  if (auth) {
+  else {
     // Check if malformed
     if (auth.split(" ")[0] != "Bearer") {
       res
