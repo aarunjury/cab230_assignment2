@@ -35,6 +35,12 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
 app.use(logger('dev'));
+logger.token('req', (req, res) => JSON.stringify(req.headers))
+logger.token('res', (req, res) => {
+ const headers = {}
+ res.getHeaderNames().map(h => headers[h] = res.getHeader(h))
+ return JSON.stringify(headers)
+})
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
