@@ -10,5 +10,6 @@ module.exports = {
     database: "volcanoes",
     user: "root",
     password: "echo4$",
+    dateStrings: true
   },
 };
